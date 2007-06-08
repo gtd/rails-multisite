@@ -42,7 +42,7 @@ ActionController::Base.class_eval do
         ActionController::Base.view_paths.shift
       end
     else
-      true
+      yield
     end
   end
 end
