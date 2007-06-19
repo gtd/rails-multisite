@@ -35,11 +35,11 @@ ActionController::Base.class_eval do
   def temporarily_add_multisite_path
     if current_site
       begin
-        ActionController::Base.view_paths.unshift(File.join(RAILS_ROOT,'sites', @active_site, 'views'))
-        logger.debug "paths: " + ActionController::Base.view_paths.join(":")
+        self.view_paths.unshift(File.join(RAILS_ROOT,'sites', @active_site, 'views'))
+        puts "paths: " + ActionController::Base.view_paths.join(":")
         yield
       ensure
-        ActionController::Base.view_paths.shift
+        self.view_paths.shift
       end
     else
       yield
