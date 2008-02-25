@@ -1,0 +1,66 @@
+= Multisite for Rails Applications
+
+This plugin provides basic support for hosting multiple sites on the same Rails code base.  It is based on Matt McCray's theme_support plugin, but is essentially completely gutted and rewritten with a different focus.  
+
+The essential functionality of the plugin is to add a specific site's views to the view path.  The concept of a view_path is new to Rails 2.0.
+
+== Requirements
+
+* This plugin is tested in Rails 2.0.2.
+* Template caching must be disabled (this includes both cache_template_loading and cache_template_extensions action_view config options)
+
+== Differences from theme_support 
+
+If you are familiar with theme_support, a 'site' is equivalent to a 'theme' in the old system.  The big difference is that this plugin doesn't make any arrangements for presenting public files.  Although a public directory is created by the generator, this can just as easily be a symlink to another directory.  The intended use is to configure Apache to provide access to static files for each domain, possibly with a rewrite rule falling back to the main Rails public directory.  This approach was chosen because the static file caching in theme_support required long paths to static files that should be unnecessary when they are created on a per-domain basis.  By letting Apache handle the specifics, static files are much simpler (no image URL coupling to the theme name, or cache expiration problems), and converting raw HTML mockups from designers tends to be much easier as well.
+
+While theme_support only officially worked through Rails 1.1, and 1.2 with some 3rd party patches (Matt where are you?), this plugin requires Rails 2.0 for the Multiple View Path functionality (http://weblog.rubyonrails.com/2007/2/4/new-feature-for-rails-2-0-multiple-controller-view-paths).  This addition to Rails makes much of the remaining complexity of the theme_support plugin disappear.  One big bonus is that templates can now be created on a per-site basis without a parent template having to exist in the base directory.  This is handy for creating extra content pages or breaking things down into partials.  
+
+== Usage
+
+You can use the site_generator to create the file structure needed, or create it 
+yourself.
+
+It expects the following site folder structure.
+
+  $app_root
+    sites/
+      [site_name]
+        views/           <- you can override application views
+        public/          <- intended to be the DOCUMENT_ROOT of the site
+
+  You specify which site to use in your controller by using 
+the declarative 'site' syntax.  Although this could be automated based on domain
+name, the relationship between domains and sites is not necessarily 1:1, so you will
+need to develop a mechanism for choosing a 'site'.
+
+  class ApplicationController < ActionController::Base
+    site 'blue_bird'
+
+    ...
+  end
+
+You can also defer the theme lookup to a controller method:
+
+  class ApplicationController < ActionController::Base
+    site :get_site
+
+    def get_site
+      domain = Domain.find_by_name(request.domain)
+      domain.theme
+    end
+
+    ...
+  end
+
+
+Note: By setting the site in the ApplicationController you can set 
+the site for the whole application.
+
+== Changelog
+
+  1.0.0 - Initial release
+
+
+---
+Copyright (c) 2007-2008 Gabe da Silveira, based on code from theme_support by Matt McCray, based on code from Typo by Tobias Luetke 
+released under the MIT license

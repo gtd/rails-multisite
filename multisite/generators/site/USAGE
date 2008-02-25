@@ -1,0 +1,15 @@
+NAME
+     site - Creates the folder structure for a new site using multisite
+
+SYNOPSIS
+     site [site_name]
+
+DESCRIPTION
+     This generator creates the folder structure for a new site. It creates one folder for views,
+     and one for any public files.  The public files can be setup as the DOCUMENT_ROOT in Apache
+     with a redirect to the base public directory.
+
+EXAMPLE
+     ./script/generate site domain
+
+     This will generate the file structure for a site named 'domain'. 
