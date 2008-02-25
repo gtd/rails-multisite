@@ -17,7 +17,7 @@ ActionController::Base.class_eval do
   #  end
   def self.site(site_name)
     write_inheritable_attribute "site", site_name
-    around_filter :temporarily_add_multisite_path
+    before_filter :add_multisite_path
   end
 
   # Retrieves the current set site
@@ -32,17 +32,14 @@ ActionController::Base.class_eval do
   end
 
   protected
-  def temporarily_add_multisite_path
+  def add_multisite_path
     if current_site
-      begin
-        ActionController::Base.view_paths.unshift(File.join(RAILS_ROOT,'sites', @active_site, 'views'))
-        logger.info "paths: " + ActionController::Base.view_paths.join(":")
-        yield
-      ensure
-        ActionController::Base.view_paths.shift
-      end
-    else
-      yield
+      raise "Multisite plugin is incompatible with template caching.  You must set config.action_view.cache_template_loading to false in your environment." if ActionView::Base.cache_template_loading
+      raise "Multisite plugin is incompatible with template extension caching.  You must set config.action_view.cache_template_extensions to false in your environment." if ActionView::Base.cache_template_extensions
+      new_path = File.join(RAILS_ROOT, 'sites', @active_site, 'views')
+      @template.prepend_view_path(new_path)
+      logger.info "  Template View Paths: #{@template.view_paths.inspect}"
     end
+    return true
   end
 end

@@ -2,7 +2,12 @@
 
 This plugin provides basic support for hosting multiple sites on the same Rails code base.  It is based on Matt McCray's theme_support plugin, but is essentially completely gutted and rewritten with a different focus.  
 
-The essential functionality of the plugin is to add a specific site's views to the view path.  The concept of a view_path is new to Rails 2.0, so you will need to be running edge to use this plugin for right now.
+The essential functionality of the plugin is to add a specific site's views to the view path.  The concept of a view_path is new to Rails 2.0.
+
+== Requirements
+
+* This plugin is tested in Rails 2.0.2.
+* Template caching must be disabled (this includes both cache_template_loading and cache_template_extensions action_view config options)
 
 == Differences from theme_support 
 
@@ -57,5 +62,5 @@ the site for the whole application.
 
 
 ---
-Copyright (c) 2007 Gabe da Silveira, based on code from theme_support by Matt McCray, based on code from Typo by Tobias Luetke 
+Copyright (c) 2007-2008 Gabe da Silveira, based on code from theme_support by Matt McCray, based on code from Typo by Tobias Luetke 
 released under the MIT license
