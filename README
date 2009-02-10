@@ -6,8 +6,7 @@ The essential functionality of the plugin is to add a specific site's views to t
 
 == Requirements
 
-* This plugin is tested in Rails 2.0.2.
-* Template caching must be disabled (this includes both cache_template_loading and cache_template_extensions action_view config options)
+* This plugin is tested in Rails 2.0.2.  Updates for Rails 2.1 and 2.2 (see tags) have been submitted but are untested by me.
 
 == Differences from theme_support 
 
@@ -55,12 +54,3 @@ You can also defer the theme lookup to a controller method:
 
 Note: By setting the site in the ApplicationController you can set 
 the site for the whole application.
-
-== Changelog
-
-  1.0.0 - Initial release
-
-
----
-Copyright (c) 2007-2008 Gabe da Silveira, based on code from theme_support by Matt McCray, based on code from Typo by Tobias Luetke 
-released under the MIT license

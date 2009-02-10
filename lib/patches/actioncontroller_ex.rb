@@ -34,11 +34,9 @@ ActionController::Base.class_eval do
   protected
   def add_multisite_path
     if current_site
-      raise "Multisite plugin is incompatible with template caching.  You must set config.action_view.cache_template_loading to false in your environment." if ActionView::Base.cache_template_loading
-      raise "Multisite plugin is incompatible with template extension caching.  You must set config.action_view.cache_template_extensions to false in your environment." if ActionView::Base.cache_template_extensions
       new_path = File.join(RAILS_ROOT, 'sites', @active_site, 'views')
-      @template.prepend_view_path(new_path)
-      logger.info "  Template View Paths: #{@template.view_paths.inspect}"
+      self.prepend_view_path(new_path)
+      logger.info "  Template View Paths: #{self.view_paths.inspect}"
     end
     return true
   end

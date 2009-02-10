@@ -1,0 +1,7 @@
+*rails2.1.x tag*
+
+* Apply Dave Shenk's fix for 2.1 internals.  Untested!
+
+*rails2.0.x tag*
+
+* Moved repository to Github
