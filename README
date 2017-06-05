@@ -1,3 +1,7 @@
+This gem is unmaintained, you should have a look at https://github.com/influitive/apartment instead
+
+===================================================================================================
+
 = Multisite for Rails Applications
 
 This plugin provides basic support for hosting multiple sites on the same Rails code base.  It is based on Matt McCray's theme_support plugin, but is essentially completely gutted and rewritten with a different focus.  
